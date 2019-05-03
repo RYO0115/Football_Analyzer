@@ -1,0 +1,17 @@
+{
+     "GK":{"pos_x":61.5, "pos_y": 0},
+     "CB":{"pos_x":50.0, "pos_y": 0},
+    "RSB":{"pos_x":46.0, "pos_y": 25},
+    "LSB":{"pos_x":46.0, "pos_y":-25},
+    "RWB":{"pos_x":43.0, "pos_y": 35},
+    "LWB":{"pos_x":43.0, "pos_y":-35},
+    "CDM":{"pos_x":40.0, "pos_y": 0},
+     "CM":{"pos_x":35.0, "pos_y": 0},
+    "CAM":{"pos_x":30.0, "pos_y": 0},
+     "RM":{"pos_x":30.0, "pos_y": 20},
+     "LM":{"pos_x":30.0, "pos_y":-20},
+     "RW":{"pos_x":20.0, "pos_y": 20},
+     "LW":{"pos_x":20.0, "pos_y":-20},
+     "CF":{"pos_x":20.0, "pos_y": 0},
+     "ST":{"pos_x":10.0, "pos_y": 0}
+}

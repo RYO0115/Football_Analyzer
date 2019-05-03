@@ -1,0 +1,6 @@
+**/__pycache__/*.*
+**/__pycache__/*.cpy
+**/__pycache__/*.pyc
+*.cpy
+*.cpython
+*.pyc

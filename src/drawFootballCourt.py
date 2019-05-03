@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+COURT_SIZE = [72.5, 45]
 
 class DRAW_COURT():
     def __init__(self, fig, ax):
@@ -8,8 +9,8 @@ class DRAW_COURT():
         self.ax = ax
 
     def DrawCourt(self):
-        self.ax.set_xlim( -72.5, 72.5)
-        self.ax.set_ylim( -34, 34)
+        self.ax.set_xlim( -COURT_SIZE[0], COURT_SIZE[0])
+        self.ax.set_ylim( -COURT_SIZE[1], COURT_SIZE[1])
         self.ax.set_aspect("equal")
         self.fig.set_facecolor("white")
         self.ax.set_facecolor("green")
@@ -32,25 +33,30 @@ class DRAW_COURT():
         circle = plt.Circle( xy=(-61.5, 0), radius=0.5, ec="k", fc="k", fill=True)
         self.ax.add_patch(circle)
 
+    def DrawPlayerCircle(self, x, y, color):
+        circle = plt.Circle( xy=(x,y), radius=2, ec="w", fc=color, fill=True)
+        self.ax.add_patch(circle)
+
+
     def DrawCourtLine(self):
         #センターライン
-        self.DrawLine( 0, 0,-34, 34)
+        self.DrawLine( 0, 0,-COURT_SIZE[1], COURT_SIZE[1])
 
         #ゴールエリア
-        self.DrawLine( 67, 67,-9.16, 9.16)
-        self.DrawLine(-67,-67,-9.16, 9.16)
-        self.DrawLine( 67, 72.5, 9.16, 9.16)
-        self.DrawLine( 67, 72.5,-9.16,-9.16)
-        self.DrawLine(-67,-72.5, 9.16, 9.16)
-        self.DrawLine(-67,-72.5,-9.16,-9.16)
+        self.DrawLine( 67.0, 67.0,-9.16, 9.16)
+        self.DrawLine(-67.0,-67.0,-9.16, 9.16)
+        self.DrawLine( 67.0, COURT_SIZE[0], 9.16, 9.16)
+        self.DrawLine( 67.0, COURT_SIZE[0],-9.16,-9.16)
+        self.DrawLine(-67.0,-COURT_SIZE[0], 9.16, 9.16)
+        self.DrawLine(-67.0,-COURT_SIZE[0],-9.16,-9.16)
 
         #ペナルティエリア
-        self.DrawLine( 56,   56,-20.16, 20.16)
-        self.DrawLine(-56,  -56,-20.16, 20.16)
-        self.DrawLine( 56, 72.5, 20.16, 20.16)
-        self.DrawLine( 56, 72.5,-20.16,-20.16)
-        self.DrawLine(-56,-72.5, 20.16, 20.16)
-        self.DrawLine(-56,-72.5,-20.16,-20.16)
+        self.DrawLine( 56.0, 56.0,-20.16, 20.16)
+        self.DrawLine(-56.0,-56.0,-20.16, 20.16)
+        self.DrawLine( 56.0, COURT_SIZE[0], 20.16, 20.16)
+        self.DrawLine( 56.0, COURT_SIZE[0],-20.16,-20.16)
+        self.DrawLine(-56.0,-COURT_SIZE[0], 20.16, 20.16)
+        self.DrawLine(-56.0,-COURT_SIZE[0],-20.16,-20.16)
 
 
     def DrawLine(self, x1, x2, y1, y2, color="w-"):
