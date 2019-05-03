@@ -4,3 +4,4 @@
 *.cpy
 *.cpython
 *.pyc
+**/__pycache__
