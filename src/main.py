@@ -1,5 +1,13 @@
 
+import matplotlib.pyplot as plt
 from setPlayer import *
+
+# for drawing court
+#if __name__ == '__main__':
+#    fig, ax = plt.subplots()
+#    dc = DRAW_COURT(fig, ax)
+#    dc.DrawCourt()
+#    dc.Show()
 
 if __name__ == '__main__':
     fig, ax = plt.subplots()

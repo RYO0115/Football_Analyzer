@@ -30,6 +30,7 @@ class DRAW_COURT():
         #ペナルティスポット
         circle = plt.Circle( xy=( 61.5, 0), radius=0.5, ec="k", fc="k", fill=True, zorder=1)
         self.ax.add_patch(circle)
+
         circle = plt.Circle( xy=(-61.5, 0), radius=0.5, ec="k", fc="k", fill=True, zorder=1)
         self.ax.add_patch(circle)
 
