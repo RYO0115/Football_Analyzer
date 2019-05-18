@@ -4,6 +4,7 @@ import numpy as np
 from drawFootballCourt import *
 
 
+
 COURT_SIZE = [72.5, 45]
 POSITION_LIST = "positionName.json"
 
@@ -14,6 +15,7 @@ class PLAYER():
         self.playerPos = ""
         self.playerID = 0
         self.pos = [0,0]
+        self.circle = ""
 
 class TEAM():
     def __init__(self, homeAway):
@@ -71,8 +73,7 @@ class PLAYER_SERVER():
                 if(team.homeAway=="home"):
                     x *= -1
                     y *= -1
-
-                self.dc.DrawPlayerCircle(x,y,team.teamColor)
+                member.circle = self.dc.DrawPlayerCircle(x,y,team.teamColor)
 
     #def ChangeFormation(self):
 

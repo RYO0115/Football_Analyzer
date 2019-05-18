@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib.backend_bases import MouseEvent
 import numpy as np
 
 COURT_SIZE = [72.5, 45]
@@ -37,6 +38,7 @@ class DRAW_COURT():
     def DrawPlayerCircle(self, x, y, color):
         circle = plt.Circle( xy=(x,y), radius=2, ec="w", fc=color, fill=True, zorder=2)
         self.ax.add_patch(circle)
+        return circle
 
 
     def DrawCourtLine(self):
