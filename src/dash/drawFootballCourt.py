@@ -6,8 +6,10 @@ from dash.dependencies import Input, Output
 import numpy as np
 
 import plotly.graph_objs as go
+import math
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+#external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+external_stylesheets = ['stylesheet.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
@@ -30,66 +32,131 @@ court_colors = {
     "line": "#FFFFFF"
 }
 
-window_size = 10
+window_size = 5
+COURT_SIZE = [72.5, 45]
+
+def GetLineShapeDict(x0, x1, y0, y1, width=6):
+    dict = {
+            "type": "line",
+            "x0": x0,
+            "x1": x1,
+            "y0": y0,
+            "y1": y1,
+            "line": {
+                "color": court_colors["line"],
+                "width":width
+            }
+    }
+    return dict
+
+def GetCircleShapeDict(x, y, r, width=3, line_color=court_colors["line"], fill_color=court_colors["ground"],fill=False):
+    dict = {
+        "type": "circle",
+        "x0": x-r,
+        "y0": y-r,
+        "x1": x+r,
+        "y1": y+r,
+        "line": {
+            "color": line_color,
+            "width": width,
+        }
+    }
+    return dict
 
 layout = go.Layout(
-    width =window_size * court_size["width"],
-    height=window_size * court_size["height"],
+    width =window_size * 2 * COURT_SIZE[0],
+    height=window_size * 2 * COURT_SIZE[1],
     xaxis=dict(
         autorange=False,
-        range=[-72.5,72.5],
+        #range=[-COURT_SIZE[0],COURT_SIZE[0]],
         zeroline=False,
-        showline=True,
+        showline=False,
         mirror='ticks',
-        domain=[0, 1.0],
         showgrid=False,
-        ticks='',
+        #ticks='',
+
+        #グラフを描く幅、複数のグラフを描きたいなら 0 ~ 1の範囲で範囲を指定すればその範囲で描画してくれる
+        #domain=[0,1.0],
+
         showticklabels=False,
-        linecolor=court_colors["line"],
-        linewidth=6
+        #linecolor=court_colors["line"],
+        #linewidth=6,
+        #rangemode="nonnegative"
 
     ),
     yaxis=dict(
         autorange=False,
-        range=[-45, 45],
+        range=[-COURT_SIZE[1]-1, COURT_SIZE[1]+1],
         zeroline=False,
-        showline=True,
-        mirror='ticks',
-        domain=[0, 1.0],
+        showline=False,
         showgrid=False,
-        ticks='',
+        scaleanchor="x",
+        #ticks='',
+        #domain=[0,1.0],
         showticklabels=False,
-        linecolor=court_colors["line"],
-        linewidth=6
+        #linecolor=court_colors["line"],
+        #linewidth=6
     ),
+    shapes=[
+        GetLineShapeDict(-COURT_SIZE[0],COURT_SIZE[0], COURT_SIZE[1], COURT_SIZE[1],  width=6),
+        GetLineShapeDict(-COURT_SIZE[0],COURT_SIZE[0],-COURT_SIZE[1],-COURT_SIZE[1],  width=6),
+        GetLineShapeDict(-COURT_SIZE[0],-COURT_SIZE[0],-COURT_SIZE[1], COURT_SIZE[1], width=6),
+        GetLineShapeDict( COURT_SIZE[0], COURT_SIZE[0],-COURT_SIZE[1], COURT_SIZE[1], width=6),
+        # センターライン
+        GetLineShapeDict(0,0,-COURT_SIZE[1],COURT_SIZE[1], width=3),
+        #ゴールエリア
+        GetLineShapeDict( 67.0, 67.0,-9.16, 9.16, width=3),
+        GetLineShapeDict(-67.0,-67.0,-9.16, 9.16, width=3),
+        GetLineShapeDict( 67.0, COURT_SIZE[0], 9.16, 9.16, width=3),
+        GetLineShapeDict( 67.0, COURT_SIZE[0],-9.16,-9.16, width=3),
+        GetLineShapeDict(-67.0,-COURT_SIZE[0], 9.16, 9.16, width=3),
+        GetLineShapeDict(-67.0,-COURT_SIZE[0],-9.16,-9.16, width=3),
+
+        #ペナルティエリア
+        GetLineShapeDict( 56.0, 56.0,-20.16, 20.16, width=3),
+        GetLineShapeDict(-56.0,-56.0,-20.16, 20.16, width=3),
+        GetLineShapeDict( 56.0, COURT_SIZE[0], 20.16, 20.16, width=3),
+        GetLineShapeDict( 56.0, COURT_SIZE[0],-20.16,-20.16, width=3),
+        GetLineShapeDict(-56.0,-COURT_SIZE[0], 20.16, 20.16, width=3),
+        GetLineShapeDict(-56.0,-COURT_SIZE[0],-20.16,-20.16, width=3),
+
+        #センターサークル
+        GetCircleShapeDict( 0, 0, 9.150, fill=False),
+
+        #ペナルティスポット
+        GetCircleShapeDict(  61.5, 0, 0.5, fill=True, line_color="#000000", fill_color="#000000"),
+        GetCircleShapeDict( -61.5, 0, 0.5, fill=True, line_color="#000000", fill_color="#000000")
+
+
+    ],
     plot_bgcolor=court_colors["ground"],
     paper_bgcolor=court_colors["paper"]
 )
+
+
+data=[
+    go.Scatter(
+        x = [-9.15,9.15,0,0, -COURT_SIZE[0], COURT_SIZE[0]],
+        y = [0,0,-9.15,9.15, -COURT_SIZE[1], COURT_SIZE[1]],
+        text=['a', 'b','c','d'],
+        name='Apple',
+        marker=dict(color='#851e52'),
+    )
+    #,
+    #go.Scatter(
+    #    x=[1,2,3,4],
+    #    y=[9,4,1,4],
+    #    text=['w','x','y','z'],
+    #    name='Tesla',
+    #    marker=dict(color='#d3560e'),
+    #),
+]
 
 app.layout = html.Div([
     dcc.Graph(
         id='basic-interactions',
         figure={
-            'data': [
-                {
-                    'x': [1, 2, 3, 4],
-                    'y': [4, 1, 3, 5],
-                    'text': ['a', 'b', 'c', 'd'],
-                    'customdata': ['c.a', 'c.b', 'c.c', 'c.d'],
-                    'name': 'Trace 1',
-                    'mode': 'markers',
-                    'marker': {'size': 12}
-                },
-                {
-                    'x': [1, 2, 3, 4],
-                    'y': [9, 4, 1, 4],
-                    'text': ['w', 'x', 'y', 'z'],
-                    'customdata': ['c.w', 'c.x', 'c.y', 'c.z'],
-                    'name': 'Trace 2',
-                    'mode': 'markers',
-                    'marker': {'size': 12}
-                }
-            ],
+            'data': data,
             'layout':layout
         }
     )
