@@ -27,12 +27,13 @@ court_size = {
 }
 
 court_colors = {
-    "paper": "#6D6767",
+    #"paper": "#6D6767",
+    "paper": "rgba(59.9%, 60.7%, 64.8%, 80%)",
     "ground": "#89EF89",
     "line": "#FFFFFF"
 }
 
-window_size = 5
+window_size = 10
 COURT_SIZE = [72.5, 45]
 
 def GetLineShapeDict(x0, x1, y0, y1, width=6):
@@ -64,20 +65,18 @@ def GetCircleShapeDict(x, y, r, width=3, line_color=court_colors["line"], fill_c
     return dict
 
 layout = go.Layout(
-    width =window_size * 2 * COURT_SIZE[0],
-    height=window_size * 2 * COURT_SIZE[1],
+    width = 800,
+    height= 500,
     xaxis=dict(
         autorange=False,
-        #range=[-COURT_SIZE[0],COURT_SIZE[0]],
+        range=[-COURT_SIZE[0],COURT_SIZE[0]],
         zeroline=False,
         showline=False,
         mirror='ticks',
         showgrid=False,
-        #ticks='',
 
         #グラフを描く幅、複数のグラフを描きたいなら 0 ~ 1の範囲で範囲を指定すればその範囲で描画してくれる
-        #domain=[0,1.0],
-
+        domain=[0.1,0.9],
         showticklabels=False,
         #linecolor=court_colors["line"],
         #linewidth=6,
@@ -86,22 +85,22 @@ layout = go.Layout(
     ),
     yaxis=dict(
         autorange=False,
-        range=[-COURT_SIZE[1]-1, COURT_SIZE[1]+1],
+        range=[-COURT_SIZE[1], COURT_SIZE[1]],
         zeroline=False,
         showline=False,
         showgrid=False,
         scaleanchor="x",
         #ticks='',
-        #domain=[0,1.0],
+        domain=[0.0,1.0],
         showticklabels=False,
         #linecolor=court_colors["line"],
         #linewidth=6
     ),
     shapes=[
-        GetLineShapeDict(-COURT_SIZE[0],COURT_SIZE[0], COURT_SIZE[1], COURT_SIZE[1],  width=6),
-        GetLineShapeDict(-COURT_SIZE[0],COURT_SIZE[0],-COURT_SIZE[1],-COURT_SIZE[1],  width=6),
-        GetLineShapeDict(-COURT_SIZE[0],-COURT_SIZE[0],-COURT_SIZE[1], COURT_SIZE[1], width=6),
-        GetLineShapeDict( COURT_SIZE[0], COURT_SIZE[0],-COURT_SIZE[1], COURT_SIZE[1], width=6),
+        GetLineShapeDict(-COURT_SIZE[0],COURT_SIZE[0], COURT_SIZE[1], COURT_SIZE[1],  width=4),
+        GetLineShapeDict(-COURT_SIZE[0],COURT_SIZE[0],-COURT_SIZE[1],-COURT_SIZE[1],  width=4),
+        GetLineShapeDict(-COURT_SIZE[0],-COURT_SIZE[0],-COURT_SIZE[1], COURT_SIZE[1], width=4),
+        GetLineShapeDict( COURT_SIZE[0], COURT_SIZE[0],-COURT_SIZE[1], COURT_SIZE[1], width=4),
         # センターライン
         GetLineShapeDict(0,0,-COURT_SIZE[1],COURT_SIZE[1], width=3),
         #ゴールエリア
