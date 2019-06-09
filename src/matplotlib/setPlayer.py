@@ -1,6 +1,8 @@
 
 import sys,os
+import math
 import numpy as np
+
 from drawFootballCourt import *
 
 
@@ -10,12 +12,29 @@ POSITION_LIST = "positionName.json"
 
 class PLAYER():
     def __init__(self):
+        self.homeAway = None
         self.name = ""
         self.uniNum = 0
         self.playerPos = ""
         self.playerID = 0
         self.pos = [0,0]
-        self.circle = ""
+        self.circle = None
+
+    def UpdatePlayerPosition(self):
+        a = 1.0
+        if self.homeAway == "home":
+            a = -1.0
+
+        x_0  = self.pos[0]
+        y_0  = self.pos[1]
+        x, y = self.circle.center
+        x *= a
+        y *= a
+
+        distance = math.sqrt(pow(x - x_0,2) + pow(y - y_0, 2))
+        if distance > 1.0:
+            self.pos[0] = x
+            self.pos[1] = y
 
 class TEAM():
     def __init__(self, homeAway):
@@ -35,7 +54,6 @@ class TEAM():
         #コートの端からペナルティスポットまでを引いたもの
         verticalLength  = COURT_SIZE[0] - 6.0
         verticalRes     = (verticalLength-5) / (len(lineMemberNum)-1)
-
         horizontalLength = COURT_SIZE[1] * 2
 
         i = 0
@@ -46,8 +64,10 @@ class TEAM():
             for j in range(memberNum):
                 y = COURT_SIZE[1] - horizontalRes * (j+1)
                 self.member[memberIDNum].pos = [x,y]
+                self.member[memberIDNum].homeAway = self.homeAway
                 memberIDNum += 1
             i += 1
+
 
 
 class PLAYER_SERVER():
@@ -66,18 +86,21 @@ class PLAYER_SERVER():
         self.teams[1].teamColor="blue"
 
     def DrawPlayers(self):
+        players = []
         for team in self.teams:
-            for member in team.member:
-                x = member.pos[0]
-                y = member.pos[1]
-                if(team.homeAway=="home"):
+            #for member in team.member:
+            for i in range(len(team.member)):
+                x = team.member[i].pos[0]
+                y = team.member[i].pos[1]
+                if(team.member[i].homeAway == "home"):
                     x *= -1
                     y *= -1
-                member.circle = self.dc.DrawPlayerCircle(x,y,team.teamColor)
+                team.member[i].circle = self.dc.DrawPlayerCircle(x,y,team.teamColor)
+                players.append(team.member[i])
+        return players
 
-    #def ChangeFormation(self):
-
-
+    def ChangeFormation(self, homeAway, formation):
+        self.teams[homeAway].SetPlayerPosition(formation)
 
 
     def Show(self):

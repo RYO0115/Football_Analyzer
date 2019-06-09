@@ -1,6 +1,7 @@
 
 import matplotlib.pyplot as plt
-from setPlayer import *
+#from setPlayer import *
+from setMouseControl import *
 
 home = 0
 away = 1
@@ -15,10 +16,11 @@ away = 1
 # for drawing player formation
 if __name__ == '__main__':
     fig, ax = plt.subplots()
-    ps = PLAYER_SERVER(fig, ax)
-    ps.SetFullMember()
+    #ps = PLAYER_SERVER(fig, ax)
+    #ps.SetFullMember()
+    #ps.teams[home].SetPlayerPosition("4231")
+    #ps.teams[away].SetPlayerPosition("442")
+    #players = ps.DrawPlayers()
+    #ps.Show()
 
-    ps.teams[home].SetPlayerPosition("4231")
-    ps.teams[away].SetPlayerPosition("442")
-    ps.DrawPlayers()
-    ps.Show()
+    GUI =  GUI_CONTROL(fig, ax)

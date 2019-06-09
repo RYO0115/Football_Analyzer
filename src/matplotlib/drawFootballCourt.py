@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from matplotlib.backend_bases import MouseEvent
 import numpy as np
 
 COURT_SIZE = [72.5, 45]
