@@ -1,9 +1,14 @@
 
 import matplotlib.pyplot as plt
 from matplotlib.backend_bases import MouseEvent
+from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 import numpy as np
 import math
 from setPlayer import *
+
+GRID_ROWS = 20
+GRID_COLS = 20
+
 
 home = 0
 away = 1
@@ -15,19 +20,17 @@ class GUI_CONTROL():
         self._dragging_player = []
         self._dragging_multi = None
 
-        self.ps = PLAYER_SERVER(fig, ax)
+        self.ps = PLAYER_SERVER(self.ax)
         self.ps.SetFullMember()
         self.ps.teams[home].SetPlayerPosition("4231")
         self.ps.teams[away].SetPlayerPosition("442")
         self._players = self.ps.DrawPlayers()
 
-        self.fig.canvas.mpl_connect('button_press_event', self._on_click)
-        self.fig.canvas.mpl_connect('button_release_event', self._on_release)
-        self.fig.canvas.mpl_connect('motion_notify_event', self._on_motion)
 
-        self.ps.Show()
 
     def _update_plot(self):
+        #self.delaunay = self.ps.DrawDelaunay()
+        #self.volonoi = self.ps.DrawVolonoi()
         self.fig.canvas.draw()
 
     def _find_neighbor_player(self, event):

@@ -4,7 +4,7 @@ import math
 import numpy as np
 
 from drawFootballCourt import *
-
+from scipy.spatial import Delaunay, Voronoi
 
 
 COURT_SIZE = [72.5, 45]
@@ -68,13 +68,37 @@ class TEAM():
                 memberIDNum += 1
             i += 1
 
+    def GetMemberPositions(self):
+        points = []
+        for i in range(len(self.member)):
+            point = self.member[i].pos
+            points.append(point)
+        return(points)
+
+    def DrawDelaunay(self):
+        points = self.GetMemberPositions()
+        self.delaunay = Delaunay(points)
+        return(self.delaunay)
+
+    def DrawVolonoi(self):
+        points = self.GetMemberPositions()
+        self.voronoi = Voronoi(points)
+        return(self.voronoi)
+
+
+
+class DrawMemberList():
+    def __init__(self, ax):
+        self.ax = ax
+
+
 
 
 class PLAYER_SERVER():
-    def __init__(self, fig, ax):
-        self.fig = fig
+    def __init__(self, ax):
+        #self.fig = fig
         self.ax = ax
-        self.dc = DRAW_COURT(fig, ax)
+        self.dc = DRAW_COURT(ax)
         self.dc.DrawCourt()
 
     def SetFullMember(self):
@@ -84,6 +108,9 @@ class PLAYER_SERVER():
 
         self.teams[0].teamColor="red"
         self.teams[1].teamColor="blue"
+
+        self.delaunay = []
+        self.volonoi = []
 
     def DrawPlayers(self):
         players = []
@@ -98,6 +125,22 @@ class PLAYER_SERVER():
                 team.member[i].circle = self.dc.DrawPlayerCircle(x,y,team.teamColor)
                 players.append(team.member[i])
         return players
+
+    def ResetLines(self):
+        self.lines = []
+
+    def DrawDelaunay(self, homeAway):
+        delaunay = []
+        for team in self.teams:
+            delaunay.append(team.DrawDelaunay())
+
+        return(delaunay)
+
+    def DrawVolonoi(self):
+        volonoi = []
+        for team in self.teams:
+            volonoi.append(team.DrawVolonoi())
+        return(volonoi)
 
     def ChangeFormation(self, homeAway, formation):
         self.teams[homeAway].SetPlayerPosition(formation)

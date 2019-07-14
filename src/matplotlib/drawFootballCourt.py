@@ -4,15 +4,15 @@ import numpy as np
 COURT_SIZE = [72.5, 45]
 
 class DRAW_COURT():
-    def __init__(self, fig, ax):
-        self.fig = fig
+    def __init__(self, ax):
+        #self.fig = fig
         self.ax = ax
 
     def DrawCourt(self):
         self.ax.set_xlim( -COURT_SIZE[0], COURT_SIZE[0])
         self.ax.set_ylim( -COURT_SIZE[1], COURT_SIZE[1])
         self.ax.set_aspect("equal")
-        self.fig.set_facecolor("white")
+        #self.fig.set_facecolor("white")
         self.ax.set_facecolor("green")
         self.ax.set_alpha(0.7)
         plt.tick_params(labelbottom=False,
