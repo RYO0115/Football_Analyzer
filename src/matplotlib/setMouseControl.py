@@ -1,7 +1,5 @@
 
-import matplotlib.pyplot as plt
 from matplotlib.backend_bases import MouseEvent
-from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 import numpy as np
 import math
 from setPlayer import *
@@ -29,8 +27,6 @@ class GUI_CONTROL():
 
 
     def _update_plot(self):
-        #self.delaunay = self.ps.DrawDelaunay()
-        #self.volonoi = self.ps.DrawVolonoi()
         self.fig.canvas.draw()
 
     def _find_neighbor_player(self, event):

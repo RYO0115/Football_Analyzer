@@ -1,6 +1,6 @@
 
 import matplotlib.pyplot as plt
-
+from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 #from setPlayer import *
 from setMouseControl import *
 

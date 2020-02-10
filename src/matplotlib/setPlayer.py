@@ -4,7 +4,7 @@ import math
 import numpy as np
 
 from drawFootballCourt import *
-from scipy.spatial import Delaunay, Voronoi
+from scipy.spatial import Delaunay, Voronoi, voronoi_plot_2d, delaunay_plot_2d
 
 
 COURT_SIZE = [72.5, 45]
@@ -129,18 +129,24 @@ class PLAYER_SERVER():
     def ResetLines(self):
         self.lines = []
 
-    def DrawDelaunay(self, homeAway):
+    def CreateDelaunay(self, homeAway):
         delaunay = []
         for team in self.teams:
             delaunay.append(team.DrawDelaunay())
 
         return(delaunay)
 
-    def DrawVolonoi(self):
+    def CreateVolonoi(self):
         volonoi = []
         for team in self.teams:
             volonoi.append(team.DrawVolonoi())
         return(volonoi)
+
+    def DrawDelaunay(self, delaunay):
+        delaunay_plot_2d(delaunay, self.ax)
+
+    def DrawVolonoi(self, voronoi):
+        voronoi_plot_2d(voronoi, self,ax)
 
     def ChangeFormation(self, homeAway, formation):
         self.teams[homeAway].SetPlayerPosition(formation)
