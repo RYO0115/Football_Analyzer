@@ -4,12 +4,10 @@ import numpy as np
 import math
 from setPlayer import *
 
-GRID_ROWS = 20
-GRID_COLS = 20
-
 
 home = 0
 away = 1
+
 
 class GUI_CONTROL():
     def __init__(self, fig, ax):
@@ -24,8 +22,6 @@ class GUI_CONTROL():
         self.ps.teams[away].SetPlayerPosition("442")
         self._players = self.ps.DrawPlayers()
 
-
-
     def _update_plot(self):
         self.fig.canvas.draw()
 
@@ -34,7 +30,7 @@ class GUI_CONTROL():
         nearest_player = None
         min_distance = math.sqrt(2 * (100 ** 2))
         for i in range(len(self._players)):
-            x,y = self._players[i].circle.center
+            x, y = self._players[i].circle.center
             distance = math.hypot(event.xdata - x, event.ydata - y)
             if distance < min_distance:
                 min_distance = distance
@@ -55,12 +51,10 @@ class GUI_CONTROL():
                 self._dragging_player.append(player_id)
                 self._dragging_multi = None
         # right click
-        #elif event.button == 3 and event.inaxes in [self.ax]:
+        # elif event.button == 3 and event.inaxes in [self.ax]:
         #    player_id = self._find_neighbor_player(event)
         #    print(self._players[player_id].center)
         #    print("right click")
-
-
 
     def _on_release(self, event):
 
@@ -74,7 +68,5 @@ class GUI_CONTROL():
         if event.xdata is None or event.ydata is None:
             return
         for player in self._dragging_player:
-            self._move_player( player, event)
+            self._move_player(player, event)
         self._update_plot()
-
-

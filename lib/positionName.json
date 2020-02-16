@@ -13,5 +13,7 @@
      "RW":{"pos_x":20.0, "pos_y": 20},
      "LW":{"pos_x":20.0, "pos_y":-20},
      "CF":{"pos_x":20.0, "pos_y": 0},
-     "ST":{"pos_x":10.0, "pos_y": 0}
+     "ST":{"pos_x":10.0, "pos_y": 0},
+     "RST":{"pos_x":10.0, "pos_y": 10},
+     "LST":{"pos_x":10.0, "pos_y":-10}
 }

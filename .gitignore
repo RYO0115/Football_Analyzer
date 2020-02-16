@@ -5,3 +5,7 @@
 *.cpython
 *.pyc
 **/__pycache__
+./.vscode
+./.ipynb*
+image/Arsenal_FC.png
+image/Tottenham_Hotspur.png
