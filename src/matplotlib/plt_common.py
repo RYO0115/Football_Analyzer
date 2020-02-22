@@ -4,8 +4,8 @@ import numpy as np
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 from PIL import Image
 
-def GetFullSizeFigure():
-    fig = plt.figure()
+def GetFullSizeFigure(num=None, figsize=None, dpi=None, facecolor=None, edgecolor=None):
+    fig = plt.figure(num=num, figsize=figsize, dpi=dpi, facecolor=facecolor, edgecolor=edgecolor)
     fig.subplots_adjust(
         left=0.0,
         right=1.0,

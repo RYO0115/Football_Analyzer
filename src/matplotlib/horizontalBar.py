@@ -213,7 +213,7 @@ if __name__ == '__main__':
                     #"Max":  ["None", 10, 100.0, 20, 20, 20, 1000, 100, 100]}
     data = pd.DataFrame( dataArray, index=[ "TeamName", "Score", "Possesion", "Shots", "Shots on Target", "Created Chances", "Passes", "Completed Passes", "Duels"] )
 
-    fig = GetFullSizeFigure()
+    fig = GetFullSizeFigure(figsize=[30,18])
     ax_backimage = fig.add_subplot(1,1,1)
     backImageDir = os.path.dirname(os.path.abspath(__file__)) + "/../../image/backimage/"
     back_im = Image.open(backImageDir + "PremierLeagueTemplate002.jpeg")
@@ -257,23 +257,6 @@ if __name__ == '__main__':
     ax_homedataname = fig.add_subplot(gs_homeDataName[:,:])
     ax_awaydataname = fig.add_subplot(gs_awayDataName[:,:])
 
-    DeleteSpines(ax_compare)
-    DeleteAxesColor(ax_compare)
-
-    DeleteAllOutlines(ax_homedataname)
-    DeleteAxesColor(ax_homedataname)
-
-    DeleteAllOutlines(ax_awaydataname)
-    DeleteAxesColor(ax_awaydataname)
-
-    DeleteSpines(ax_home)
-    DeleteAxesColor(ax_home)
-
-    DeleteSpines(ax_away)
-    DeleteAxesColor(ax_away)
-
-    DeleteAllOutlines(ax_dataname)
-    DeleteAxesColor(ax_dataname)
 
     #DeleteAxesColor()
     #ax_compare.patch.set_alpha(0.0)
@@ -320,10 +303,6 @@ if __name__ == '__main__':
 
     DeleteXTicks(ax_home)
     DeleteXTicks(ax_away)
-    DeleteAllOutlines(ax_home)
-    DeleteAllOutlines(ax_away)
-    DeleteAllOutlines(ax_dataname)
-    DeleteAllOutlines(ax_compare)
 
     imageDir = os.path.dirname(os.path.abspath(__file__)) + "/../../image/"
     home_im = Image.open(imageDir + "Arsenal_FC.png")
@@ -338,5 +317,22 @@ if __name__ == '__main__':
 
     # ---------------------------------------------------------------- #
 
+    DeleteAllOutlines(ax_compare)
+    DeleteAxesColor(ax_compare)
+
+    DeleteAllOutlines(ax_homedataname)
+    DeleteAxesColor(ax_homedataname)
+
+    DeleteAllOutlines(ax_awaydataname)
+    DeleteAxesColor(ax_awaydataname)
+
+    DeleteAllOutlines(ax_home)
+    DeleteAxesColor(ax_home)
+
+    DeleteAllOutlines(ax_away)
+    DeleteAxesColor(ax_away)
+
+    DeleteAllOutlines(ax_dataname)
+    DeleteAxesColor(ax_dataname)
     plt.show()
 
