@@ -17,8 +17,16 @@ GRID_COLS = 100
 #GRID_MERGIN = 1
 
 #DataName Window Size
-DATANAME_ROWS = int(GRID_ROWS * 0.8)
+DATANAME_ROWS = int(GRID_ROWS * 0.7)
 DATANAME_COLS = int(GRID_COLS * 0.3)
+SIDE_MERGIN     = int(0.1 * GRID_COLS)
+
+# DataName Windows for Comparing Table
+HOMEDATANAME_COLS_START = SIDE_MERGIN
+HOMEDATANAME_COLS_END   = SIDE_MERGIN + int(GRID_ROWS * 0.05)
+
+AWAYDATANAME_COLS_START = -SIDE_MERGIN - int(GRID_ROWS * 0.05)
+AWAYDATANAME_COLS_END   = -SIDE_MERGIN
 
 #ScoreTable Window Size
 SCORETABLE_ROWS = int(GRID_ROWS * 0.2)
@@ -33,14 +41,14 @@ SCORETABLE_ROW_END = SCORETABLE_ROWS
 HOMETEAMNAME_COL_END    = TEAMNAME_COLS
 AWAYTEAMNAME_COL_START    = HOMETEAMNAME_COL_END + SCORE_COLS
 
-SIDE_MERGIN     = int(0.1 * GRID_COLS)
 
 #Team Stats Windows Size
-STATS_ROW_START    = SCORETABLE_ROW_END
+STATS_ROW_START     = SCORETABLE_ROW_END
+STATS_ROW_END       = STATS_ROW_START + int(GRID_ROWS * 0.7)
 HOME_STATS_COL_END = int((GRID_COLS-DATANAME_COLS)/2)
 AWAY_STATS_COL_START = int((GRID_COLS+DATANAME_COLS)/2)
 
-gs_master = GridSpec(nrows=GRID_ROWS, ncols=GRID_ROWS)
+gs_master = GridSpec(nrows=GRID_ROWS, ncols=GRID_COLS)
 
 #Score Board
 gs_scoreboard   = GridSpecFromSubplotSpec(nrows=SCORETABLE_ROWS, ncols=SCORETABLE_COLS, subplot_spec=gs_master[:SCORETABLE_ROW_END, :])
@@ -53,13 +61,15 @@ gs_score        = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_scor
 gs_date         = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_scoreboard[:1, HOMETEAMNAME_COL_END:AWAYTEAMNAME_COL_START])
 
 # Stats Table
-gs_dataname     = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:, HOME_STATS_COL_END:AWAY_STATS_COL_START])
+gs_dataname     = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:STATS_ROW_END, HOME_STATS_COL_END:AWAY_STATS_COL_START])
 # No Compare Version
-gs_homelist     = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:,  SIDE_MERGIN:HOME_STATS_COL_END])
-gs_awaylist     = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:, AWAY_STATS_COL_START:-SIDE_MERGIN])
+gs_homelist     = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:STATS_ROW_END,  SIDE_MERGIN:HOME_STATS_COL_END])
+gs_awaylist     = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:STATS_ROW_END, AWAY_STATS_COL_START:-SIDE_MERGIN])
 
 # Comparing Version
-gs_comparelist  = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:,  SIDE_MERGIN:-SIDE_MERGIN])
+gs_comparelist  = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:STATS_ROW_END,  SIDE_MERGIN:-SIDE_MERGIN])
+gs_homeDataName = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:STATS_ROW_END, HOMEDATANAME_COLS_START:HOMEDATANAME_COLS_END])
+gs_awayDataName = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[STATS_ROW_START:STATS_ROW_END, AWAYDATANAME_COLS_START:AWAYDATANAME_COLS_END])
 
 
 
@@ -209,7 +219,7 @@ if __name__ == '__main__':
     back_im = Image.open(backImageDir + "PremierLeagueTemplate002.jpeg")
     back_xlim = ax_backimage.get_xlim()
     back_ylim = ax_backimage.get_ylim()
-    ax_backimage.imshow(back_im, extent=[*back_xlim, *back_ylim], aspect="auto", alpha=0.8)
+    ax_backimage.imshow(back_im, extent=[*back_xlim, *back_ylim], aspect="auto", alpha=1.0)
     #fig.set_facecolor("lightblue")
     #ax_scoreboard = fig.add_subplot(gs_scoreboard[:,:])
 
@@ -217,6 +227,7 @@ if __name__ == '__main__':
     ax_awayTeamName = fig.add_subplot(gs_awayTeamName[:,:])
     ax_score        = fig.add_subplot(gs_score[:,:])
     ax_date         = fig.add_subplot(gs_date[:,:])
+
     DeleteAllOutlines(ax_homeTeamName)
     DeleteAllOutlines(ax_awayTeamName)
     DeleteAxesColor(ax_homeTeamName)
@@ -239,12 +250,29 @@ if __name__ == '__main__':
     # ------------- Stats Setting ------------
     ax_home = fig.add_subplot(gs_homelist[:,:])
     ax_away = fig.add_subplot(gs_awaylist[:,:])
+
     ax_compare = fig.add_subplot(gs_comparelist[:,:])
+
     ax_dataname = fig.add_subplot(gs_dataname[:,:])
+    ax_homedataname = fig.add_subplot(gs_homeDataName[:,:])
+    ax_awaydataname = fig.add_subplot(gs_awayDataName[:,:])
+
     DeleteSpines(ax_compare)
     DeleteAxesColor(ax_compare)
+
+    DeleteAllOutlines(ax_homedataname)
+    DeleteAxesColor(ax_homedataname)
+
+    DeleteAllOutlines(ax_awaydataname)
+    DeleteAxesColor(ax_awaydataname)
+
+    DeleteSpines(ax_home)
     DeleteAxesColor(ax_home)
+
+    DeleteSpines(ax_away)
     DeleteAxesColor(ax_away)
+
+    DeleteAllOutlines(ax_dataname)
     DeleteAxesColor(ax_dataname)
 
     #DeleteAxesColor()
@@ -260,10 +288,9 @@ if __name__ == '__main__':
     ax_away.set_ylim([GetDataWithoutNameAndScore(data).shape[0],-0.5])
 
     ax_dataname.set_ylim([GetDataWithoutNameAndScore(data).shape[0],-0.5])
+    ax_homedataname.set_ylim([GetDataWithoutNameAndScore(data).shape[0],-0.5])
+    ax_awaydataname.set_ylim([GetDataWithoutNameAndScore(data).shape[0],-0.5])
 
-    DeleteSpines(ax_home)
-    DeleteSpines(ax_away)
-    DeleteAllOutlines(ax_dataname)
 
     homeLabel    = GetDataWithoutNameAndScore(data["Home"]).values.tolist()
     awayLabel    = GetDataWithoutNameAndScore(data["Away"]).values.tolist()
@@ -282,11 +309,13 @@ if __name__ == '__main__':
     #WriteDataName( ax_dataname, indexData, size=10)
 
     vis_data = data.drop("TeamName")
+    WriteDataName( ax_dataname, vis_data.index, color="White", size=12, pos="top")
+    WriteDataName( ax_homedataname, GetDataNumAsLabel(vis_data["Home"].values.tolist()), color="White", size=10, pos="center")
+    WriteDataName( ax_awaydataname, GetDataNumAsLabel(vis_data["Away"].values.tolist()), color="White", size=10, pos="center")
+
     vis_data = GetNormalizedDataList(vis_data)
     DrawStatsWithComparingHorizontalBar( ax_compare, vis_data)
     ax_compare.set_ylim([len(vis_data.index),-0.5])
-
-    WriteDataName( ax_dataname, vis_data.index, color="White", size=12, pos="top")
 
 
     DeleteXTicks(ax_home)
