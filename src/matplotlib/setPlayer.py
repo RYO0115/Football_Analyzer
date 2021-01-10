@@ -3,7 +3,7 @@ import sys,os
 import math
 import numpy as np
 
-from drawFootballCourt import *
+from DrawFootballCourt import *
 from scipy.spatial import Delaunay, Voronoi, voronoi_plot_2d, delaunay_plot_2d
 
 

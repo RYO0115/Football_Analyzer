@@ -2,7 +2,7 @@
 from matplotlib.backend_bases import MouseEvent
 import numpy as np
 import math
-from setPlayer import *
+from SetPlayer import *
 
 
 home = 0

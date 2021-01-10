@@ -5,8 +5,8 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 
-from drawFootballCourt import *
-from setPlayer import *
+from DrawFootballCourt import *
+from SetPlayer import *
 
 external_stylesheets = ['stylesheet.css']
 

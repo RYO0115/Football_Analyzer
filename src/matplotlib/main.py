@@ -10,8 +10,8 @@ matplotlib.use("TkAgg")
 
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
-#from setPlayer import *
-from setMouseControl import *
+#from SetPlayer import *
+from SetMouseControl import *
 
 home = 0
 away = 1

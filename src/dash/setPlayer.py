@@ -1,7 +1,7 @@
 
 import sys,os
 import numpy as np
-from drawFootballCourt import *
+from DrawFootballCourt import *
 
 class HOME_AWAY():
     def __init__(self):

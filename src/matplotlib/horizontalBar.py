@@ -5,7 +5,7 @@ import matplotlib.patheffects as path_effects
 
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 
-from fileReader import *
+from FileReader import *
 from plt_common import *
 
 import pandas as pd
@@ -208,10 +208,13 @@ def WriteDataName(ax, dataNameList, color="black", size=6, pos="center"):
 
 
 if __name__ == '__main__':
-    dataArray = {   "Home": ["Arsenal", 2, 53.2, 10, 4, 2, 701, 87, 48],
-                    "Away": ["Tottenham", 0, 46.8, 6, 3, 2, 350, 81, 58]}
-                    #"Max":  ["None", 10, 100.0, 20, 20, 20, 1000, 100, 100]}
-    data = pd.DataFrame( dataArray, index=[ "TeamName", "Score", "Possesion", "Shots", "Shots on Target", "Created Chances", "Passes", "Completed Passes", "Duels"] )
+    #dataArray = {   "Home": ["Arsenal", 2, 53.2, 10, 4, 2, 701, 87, 48],
+    #                "Away": ["Tottenham", 0, 46.8, 6, 3, 2, 350, 81, 58]}
+    #                #"Max":  ["None", 10, 100.0, 20, 20, 20, 1000, 100, 100]}
+    #data = pd.DataFrame( dataArray, index=[ "TeamName", "Score", "Possesion", "Shots", "Shots on Target", "Created Chances", "Passes", "Completed Passes", "Duels"] )
+
+    data = ReadCsvWithPDIndex(os.path.dirname(os.path.abspath(__file__)) + "/../../data/" + "sample_statsdata.csv")
+
 
     fig = GetFullSizeFigure(figsize=[30,18])
     ax_backimage = fig.add_subplot(1,1,1)
