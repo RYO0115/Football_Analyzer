@@ -9,7 +9,7 @@ home = 0
 away = 1
 
 
-class GUI_CONTROL():
+class FORMATION():
     def __init__(self, fig, ax):
         self.fig = fig
         self.ax = ax

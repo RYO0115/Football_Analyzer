@@ -45,7 +45,7 @@ if __name__ == '__main__':
     fig = plt.figure()
 
     ax = fig.add_subplot(gs_main[:,:])
-    GUI =  GUI_CONTROL(fig, ax)
+    GUI =  FORMATION(fig, ax)
 
     canvas = FigureCanvasTkAgg(fig, master=root)  # A tk.DrawingArea.
     canvas.draw()

@@ -8,13 +8,13 @@ class DRAW_COURT():
         #self.fig = fig
         self.ax = ax
 
-    def DrawCourt(self):
+    def DrawCourt(self,color="green"):
         self.ax.set_xlim( -COURT_SIZE[0], COURT_SIZE[0])
         self.ax.set_ylim( -COURT_SIZE[1], COURT_SIZE[1])
         self.ax.set_aspect("equal")
         #self.fig.set_facecolor("white")
-        self.ax.set_facecolor("green")
-        self.ax.set_alpha(0.7)
+        self.ax.set_facecolor(color)
+        self.ax.set_alpha(0.6)
         plt.tick_params(labelbottom=False,
                         labelleft=False,
                         labelright=False,
